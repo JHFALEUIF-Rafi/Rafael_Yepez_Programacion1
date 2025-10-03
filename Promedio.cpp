@@ -69,6 +69,15 @@ void calcularPromedio(float calificaciones[], int cantidad)
     int promedioEntero = promedio * 100;
     promedio = promedioEntero / 100.0;
     cout << "El promedio de las " << cantidad << " calificaciones es: " << promedio << endl;
+
+    if (promedio < 6)
+    {
+        cout << "Estudiante Reprobado" << endl;
+    }
+    else
+    {
+        cout << "Estudiante Aprobado";
+    }
 }
 
 void mostrarNotas(float calificaciones[], int cantidad)
@@ -78,8 +87,9 @@ void mostrarNotas(float calificaciones[], int cantidad)
         cout << "No hay calificaciones ingresadas...." << endl;
         return;
     }
-    
-    cout << "***NOTAS INGRESADAS***" << endl;
+
+    cout << "\n***NOTAS INGRESADAS***\n"
+         << endl;
     for (int i = 0; i < cantidad; i++)
     {
         cout << "Calificacion " << (i + 1) << ": " << calificaciones[i] << endl;
@@ -130,10 +140,14 @@ void menu(float calificaciones[], int &cantidad)
     } while (validar);
 }
 
-int main()
+void parametros()
 {
     float calificaciones[15];
     int cantidad = 0;
     menu(calificaciones, cantidad);
+}
+
+int main(){
+    parametros();
     return 0;
 }
