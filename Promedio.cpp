@@ -27,7 +27,7 @@ void ingresarCalificacion(float calificaciones[], int &cantidad)
         calificaciones[cantidad] = nota;
         cantidad++;
         cout << "Calificacion: " << nota << " agregada exitosamente." << endl;
-        cin.ignore(1000, '\n');
+        // cin.ignore(1000, '\n');
 
         bool entradaValida = false;
         do
@@ -71,6 +71,21 @@ void calcularPromedio(float calificaciones[], int cantidad)
     cout << "El promedio de las " << cantidad << " calificaciones es: " << promedio << endl;
 }
 
+void mostrarNotas(float calificaciones[], int cantidad)
+{
+    if (cantidad == 0)
+    {
+        cout << "No hay calificaciones ingresadas...." << endl;
+        return;
+    }
+    
+    cout << "***NOTAS INGRESADAS***" << endl;
+    for (int i = 0; i < cantidad; i++)
+    {
+        cout << "Calificacion " << (i + 1) << ": " << calificaciones[i] << endl;
+    }
+}
+
 void menu(float calificaciones[], int &cantidad)
 {
     int opcion;
@@ -81,12 +96,13 @@ void menu(float calificaciones[], int &cantidad)
         cout << "\nSeleccione una opcion:" << endl;
         cout << "1. Ingresar Calificacion" << endl;
         cout << "2. Obtener Promedio" << endl;
-        cout << "3. Salir" << endl;
+        cout << "3. Mostrar calificaciones" << endl;
+        cout << "4. Salir" << endl;
         cout << "Opcion: ";
 
         while (!(cin >> opcion))
         {
-            cout << "Ingrese una opcion valida (1-3)" << endl;
+            cout << "Ingrese una opcion valida (1-4)" << endl;
             cout << "Opcion: ";
             cin.clear();
             cin.ignore(1000, '\n');
@@ -101,6 +117,9 @@ void menu(float calificaciones[], int &cantidad)
             calcularPromedio(calificaciones, cantidad);
             break;
         case 3:
+            mostrarNotas(calificaciones, cantidad);
+            break;
+        case 4:
             cout << "Saliendo del programa..." << endl;
             validar = false;
             break;
@@ -113,7 +132,7 @@ void menu(float calificaciones[], int &cantidad)
 
 int main()
 {
-    float calificaciones[100];
+    float calificaciones[15];
     int cantidad = 0;
     menu(calificaciones, cantidad);
     return 0;
