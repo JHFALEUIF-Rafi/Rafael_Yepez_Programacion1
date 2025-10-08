@@ -1,7 +1,7 @@
 /*INTEGRANTES
  1. Jurado Alan
  2. Yépez Rafael*/
- 
+
 #include <stdio.h>
 
 int main()
@@ -12,17 +12,52 @@ int main()
 
     printf("### SISTEMA DE GESTION ###\n");
 
-    printf("Ingrese el ID del producto: ");
-    scanf("%d", &id);
+    do
+    {
+        printf("Ingrese el ID del producto: ");
+        if (scanf("%d", &id) != 1)
+        {
+            printf("Error: Ingrese un numero valido.\n");
+            while (getchar() != '\n')
+                ;
+            id = -1;
+        }
+    } while (id <= 0);
 
-    printf("Ingrese el nombre del producto: ");
-    scanf(" %s", nombre);
+    do
+    {
+        printf("Ingrese el nombre del producto: ");
+        if (scanf(" %29s", nombre) != 1 || nombre[0] == '\0')
+        {
+            printf("Error: Ingrese un nombre valido.\n");
+            while (getchar() != '\n')
+                ;
+        }
+    } while (nombre[0] == '\0');
 
-    printf("Ingrese la cantidad inicial en stock: ");
-    scanf("%d", &stock);
+    do
+    {
+        printf("Ingrese la cantidad inicial en stock: ");
+        if (scanf("%d", &stock) != 1)
+        {
+            printf("Error: Ingrese un numero valido.\n");
+            while (getchar() != '\n')
+                ;
+            stock = -1;
+        }
+    } while (stock < 0);
 
-    printf("Ingrese el precio unitario: ");
-    scanf("%f", &precio);
+    do
+    {
+        printf("Ingrese el precio unitario: ");
+        if (scanf("%f", &precio) != 1)
+        {
+            printf("Error: Ingrese un precio valido.\n");
+            while (getchar() != '\n')
+                ;
+            precio = -1;
+        }
+    } while (precio <= 0);
 
     do
     {
@@ -47,7 +82,7 @@ int main()
             }
             else
             {
-                printf("No se puede realizar la venta.\n");
+                printf("\nNo se puede realizar la venta.\n");
             }
             break;
 
@@ -61,7 +96,7 @@ int main()
             }
             else
             {
-                printf("Cantidad invalida.\n");
+                printf("\nCantidad invalida.\n");
             }
             break;
 
@@ -75,7 +110,7 @@ int main()
             break;
 
         case 4:
-            printf("Saliendo del sistema...\n");
+            printf("\nSaliendo del sistema...\n");
             break;
 
         default:
