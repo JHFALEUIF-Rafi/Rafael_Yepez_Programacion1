@@ -1,6 +1,8 @@
 /*INTEGRANTES
  1. Jurado Alan
- 2. Yépez Rafael*/
+ 2. Yépez Rafael
+ 
+ VERSION CORREGIDA */
 
 #include <stdio.h>
 
