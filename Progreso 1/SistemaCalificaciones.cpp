@@ -106,9 +106,22 @@ void ingresoEstudianteCompleto(string estudiantes[], string asignaturas[][3], fl
             sumaCalificaciones += nota;
             contadorNotas++;
 
-            cout << "¿Desea ingresar otra nota para " << asignatura << "? (s/n): ";
-            cin >> otraNota;
-            cin.ignore();
+            bool entradaValida = false;
+            do
+            {
+                cout << "Desea ingresar otra calificacion? (s/n): ";
+                cin >> otraNota;
+                cin.ignore(1000, '\n');
+
+                if (otraNota == 's' || otraNota == 'S' || otraNota == 'n' || otraNota == 'N')
+                {
+                    entradaValida = true;
+                }
+                else
+                {
+                    cout << "Por favor ingrese 's' para si o 'n' para no." << endl;
+                }
+            } while (!entradaValida);
 
         } while (otraNota == 's' || otraNota == 'S');
 
@@ -148,7 +161,7 @@ void calcularPromedio(string estudiantes[], string asignaturas[][3], float calif
 
     int indiceEstudiante = opcion - 1;
 
-    system("cls");
+    system("clear");
     cout << "\n=== PROMEDIOS DE " << estudiantes[indiceEstudiante] << " ===" << endl;
 
     float sumaGeneral = 0;
@@ -159,7 +172,11 @@ void calcularPromedio(string estudiantes[], string asignaturas[][3], float calif
     {
         if (!asignaturas[indiceEstudiante][i].empty())
         {
-            cout << asignaturas[indiceEstudiante][i] << ": " << calificaciones[indiceEstudiante][i] << endl;
+            float nota = calificaciones[indiceEstudiante][i];
+            int temporal = nota * 100;
+            float notaRedondeada = temporal / 100.0;
+
+            cout << asignaturas[indiceEstudiante][i] << ": " << notaRedondeada << endl;
             sumaGeneral += calificaciones[indiceEstudiante][i];
             asignaturasConNotas++;
         }
@@ -168,11 +185,15 @@ void calcularPromedio(string estudiantes[], string asignaturas[][3], float calif
     if (asignaturasConNotas > 0)
     {
         float promedioGeneral = sumaGeneral / asignaturasConNotas;
+
+        int tempPromedio = promedioGeneral * 100;
+        float promedioRedondeado = tempPromedio / 100.0;
+
         cout << "\n--- PROMEDIO GENERAL ---" << endl;
-        cout << "Promedio general: " << promedioGeneral << endl;
+        cout << "Promedio general: " << promedioRedondeado << endl;
 
         cout << "Estado: ";
-        if (promedioGeneral >= 6.0)
+        if (promedioRedondeado >= 6.0)
         {
             cout << "APROBADO" << endl;
         }
@@ -195,7 +216,7 @@ void mostrarResumen(string estudiantes[], string asignaturas[][3], float calific
         return;
     }
 
-    system("cls");
+    system("clear");
     cout << "\n=== RESUMEN GENERAL DEL SISTEMA ===" << endl;
 
     int aprobados = 0;
@@ -215,7 +236,11 @@ void mostrarResumen(string estudiantes[], string asignaturas[][3], float calific
         {
             if (!asignaturas[i][j].empty())
             {
-                cout << asignaturas[i][j] << ": " << calificaciones[i][j] << endl;
+                float nota = calificaciones[i][j];
+                int temporal = nota * 100;
+                float notaRedondeada = temporal / 100.0;
+
+                cout << asignaturas[i][j] << ": " << notaRedondeada << endl;
                 sumaEstudiante += calificaciones[i][j];
                 materiasConNota++;
             }
@@ -224,9 +249,13 @@ void mostrarResumen(string estudiantes[], string asignaturas[][3], float calific
         if (materiasConNota > 0)
         {
             float promedioEstudiante = sumaEstudiante / materiasConNota;
-            cout << "PROMEDIO GENERAL: " << promedioEstudiante << " - ";
 
-            if (promedioEstudiante >= 6.0)
+            int tempPromedio = promedioEstudiante * 100;
+            float promedioRedondeado = tempPromedio / 100.0;
+
+            cout << "PROMEDIO GENERAL: " << promedioRedondeado << " - ";
+
+            if (promedioRedondeado >= 6.0)
             {
                 cout << "APROBADO" << endl;
                 aprobados++;
@@ -237,14 +266,14 @@ void mostrarResumen(string estudiantes[], string asignaturas[][3], float calific
                 reprobados++;
             }
 
-            if (promedioEstudiante > mayorCalificacion)
+            if (promedioRedondeado > mayorCalificacion)
             {
-                mayorCalificacion = promedioEstudiante;
+                mayorCalificacion = promedioRedondeado;
                 estudianteMayor = estudiantes[i];
             }
-            if (promedioEstudiante < menorCalificacion)
+            if (promedioRedondeado < menorCalificacion)
             {
-                menorCalificacion = promedioEstudiante;
+                menorCalificacion = promedioRedondeado;
                 estudianteMenor = estudiantes[i];
             }
         }
@@ -262,14 +291,17 @@ void mostrarResumen(string estudiantes[], string asignaturas[][3], float calific
 
     if (aprobados + reprobados > 0)
     {
-        cout << "Mejor promedio: " << estudianteMayor << " (" << mayorCalificacion << ")" << endl;
-        cout << "Peor promedio: " << estudianteMenor << " (" << menorCalificacion << ")" << endl;
+        int tempMayor = mayorCalificacion * 100;
+        int tempMenor = menorCalificacion * 100;
+
+        cout << "Mejor promedio: " << estudianteMayor << " (" << (tempMayor / 100.0) << ")" << endl;
+        cout << "Peor promedio: " << estudianteMenor << " (" << (tempMenor / 100.0) << ")" << endl;
 
         float porcentajeAprobados = (aprobados * 100.0) / (aprobados + reprobados);
-        cout << "Porcentaje de aprobados: " << porcentajeAprobados << "%" << endl;
+        int tempPorcentaje = porcentajeAprobados * 100;
+        cout << "Porcentaje de aprobados: " << (tempPorcentaje / 100.0) << "%" << endl;
     }
 }
-
 void menu(string estudiantes[], string asignaturas[][3], float calificaciones[][3], int &contadorEstudiantes)
 {
     int opcion;
@@ -297,6 +329,7 @@ void menu(string estudiantes[], string asignaturas[][3], float calificaciones[][
         {
         case 1:
             system("cls");
+            ingresoEstudianteCompleto(estudiantes, asignaturas, calificaciones, contadorEstudiantes);
             cin.ignore();
             cin.get();
             break;
