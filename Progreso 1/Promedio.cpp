@@ -1,4 +1,5 @@
 #include <iostream>
+#define MAX 100
 using namespace std;
 
 void ingresarCalificacion(float calificaciones[], int &cantidad)
@@ -142,7 +143,7 @@ void menu(float calificaciones[], int &cantidad)
 
 void parametros()
 {
-    float calificaciones[15];
+    float calificaciones[MAX];
     int cantidad = 0;
     menu(calificaciones, cantidad);
 }
