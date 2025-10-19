@@ -16,7 +16,7 @@ void ingresoEstudianteCompleto(string estudiantes[], string asignaturas[][3], fl
     {
         cout << "Ingrese nombre del estudiante: ";
         if (contadorEstudiantes == 0)
-            cin.ignore(); // Solo la primera vez
+            cin.ignore();
         getline(cin, nombre);
 
         nombreValido = true;
@@ -161,7 +161,7 @@ void calcularPromedio(string estudiantes[], string asignaturas[][3], float calif
 
     int indiceEstudiante = opcion - 1;
 
-    system("clear");
+    system("cls");
     cout << "\n=== PROMEDIOS DE " << estudiantes[indiceEstudiante] << " ===" << endl;
 
     float sumaGeneral = 0;
@@ -216,7 +216,7 @@ void mostrarResumen(string estudiantes[], string asignaturas[][3], float calific
         return;
     }
 
-    system("clear");
+    system("cls");
     cout << "\n=== RESUMEN GENERAL DEL SISTEMA ===" << endl;
 
     int aprobados = 0;
@@ -309,7 +309,7 @@ void menu(string estudiantes[], string asignaturas[][3], float calificaciones[][
 
     do
     {
-        system("clear");
+        system("cls");
         cout << "\n=== SISTEMA DE CALIFICACIONES ===" << endl;
         cout << "1. Ingresar Estudiante" << endl;
         cout << "2. Calcular Promedio" << endl;
@@ -330,6 +330,7 @@ void menu(string estudiantes[], string asignaturas[][3], float calificaciones[][
         case 1:
             system("cls");
             ingresoEstudianteCompleto(estudiantes, asignaturas, calificaciones, contadorEstudiantes);
+            cout << "\nPresione Enter para continuar...";
             cin.ignore();
             cin.get();
             break;
