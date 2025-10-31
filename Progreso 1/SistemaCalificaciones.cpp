@@ -302,6 +302,7 @@ void mostrarResumen(string estudiantes[], string asignaturas[][3], float calific
         cout << "Porcentaje de aprobados: " << (tempPorcentaje / 100.0) << "%" << endl;
     }
 }
+
 void menu(string estudiantes[], string asignaturas[][3], float calificaciones[][3], int &contadorEstudiantes)
 {
     int opcion;
