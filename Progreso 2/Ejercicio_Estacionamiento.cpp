@@ -1,5 +1,26 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
+
+void ingresoCliente(float cliente[], float minutos, int contadorCarro)
+{
+    char opcion;
+
+    do
+    {
+        cout << "Ingrese el tiempo que estuvo estacionado (en minutos): ";
+        cin >> minutos;
+        contadorCarro ++;
+    } while (minutos < 0);
+
+    do
+    {
+        cout << "Deseea ingresar otro vehiculo(s/n):";
+        cin >> opcion;
+    } while (opcion == 's' || opcion == 'S');
+
+    
+}
 
 float convertirHoras(float minutos)
 {
@@ -13,15 +34,19 @@ float convertirHoras(float minutos)
 
 float calcularCarga(float horas)
 {
-    float tarifa = 0.50;
+    int tarifaBase = 2;
+    float tarifaHoraExtra = 0.50;
+    float horaExtra;
     float carga;
     if (horas < 3)
     {
-        carga = tarifa * 4;
+        carga = tarifaBase;
     }
     else if (horas > 3 && horas < 24)
     {
-        carga = horas * tarifa;
+        horaExtra = horas - 3;
+        int horaEntera = ceil(horaExtra);
+        carga = tarifaBase + (horaEntera * tarifaHoraExtra);
     }
     else if (horas >= 24)
     {
@@ -37,16 +62,14 @@ void cobrar(float minutos, float horas, float carga)
 
 int main()
 {
+    const int aforo = 90;
+    int contadorCarro = 0;
     float minutos;
-    do
-    {
-        cout << "Ingrese el tiempo que estuvo estacionado (en minutos): ";
-        cin >> minutos;
-    } while (minutos < 0);
+    float cliente[aforo];
 
     float horas = convertirHoras(minutos);
     float carga = calcularCarga(horas);
-    
+
     cobrar(minutos, horas, carga);
 
     return 0;
