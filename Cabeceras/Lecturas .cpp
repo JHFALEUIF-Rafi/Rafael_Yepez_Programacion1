@@ -12,7 +12,6 @@ void validarPositivo(int &positivo)
             cout << "El numero ingresado no es positivo" << endl;
         }
     } while (positivo < 1);
-    //
 }
 
 void validarNegativo(int &negativo)
@@ -39,24 +38,4 @@ void validarRango(int &rango)
             cout << "El numero debe estar entre 0 y 10" << endl;
         }
     } while (rango < 0 || rango > 10);
-}
-
-int main()
-{
-    int positivo;
-    int negativo;
-    int rango;
-
-    validarPositivo(positivo);
-    validarNegativo(negativo);
-    validarRango(rango);
-
-    // Mostrar resultados
-    cout << "\n--- Datos validados correctamente ---" << endl;
-    cout << "Nombre: " << nombre << endl;
-    cout << "Numero positivo: " << positivo << endl;
-    cout << "Numero negativo: " << negativo << endl;
-    cout << "Numero en rango (0-10): " << rango << endl;
-
-    return 0;
 }

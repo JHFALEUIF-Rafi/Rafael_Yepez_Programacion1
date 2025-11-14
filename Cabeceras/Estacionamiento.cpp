@@ -101,20 +101,3 @@ void mostrarResumen(float cliente[], int contadorCarro)
     cout << "TOTAL A PAGAR: " << total << " $" << endl;
     cout << "========================" << endl;
 }
-
-int main()
-{
-    const int aforo = 90;
-    int contadorCarro = 0;
-    float cliente[aforo]; 
-    cout << "=== SISTEMA DE COBRO DE ESTACIONAMIENTO ===" << endl;
-    
-    
-    ingresoCliente(cliente, contadorCarro);
-    
-    mostrarResumen(cliente, contadorCarro);
-    
-    cout << "\nGracias por usar nuestro servicio!" << endl;
-    
-    return 0;
-}

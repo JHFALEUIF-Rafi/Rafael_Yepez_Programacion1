@@ -4,3 +4,5 @@ b = 2
 
 suma = a + b
 print(suma)
+
+abs(5)
