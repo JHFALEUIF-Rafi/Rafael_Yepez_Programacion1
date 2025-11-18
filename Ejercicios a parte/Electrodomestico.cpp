@@ -1,20 +1,14 @@
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
-int main()
-{
-    const int aparatos = 3;
-    const int dias = 7;
-    int mayor;
-    float suma;
-    string electrodomesticos[aparatos] = {"Refrigerador", "Lavadora", "Televisor"};
-    string diaSemana[dias] = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
-    float registro[aparatos][dias];
-    float consumoSemana[aparatos];
+// Declaraciones de funciones
 
-    for (int i = 0; i < aparatos; i++)
+void leerDatosConsumo(float registro[][DIAS], string electrodomesticos[], string diaSemana[])
+{
+    for (int i = 0; i < APARATOS; i++)
     {
-        for (int j = 0; j < dias; j++)
+        for (int j = 0; j < DIAS; j++)
         {
             do
             {
@@ -27,63 +21,123 @@ int main()
             } while (registro[i][j] <= 0);
         }
     }
+}
 
+void mostrarRegistroConsumo(float registro[][DIAS], string electrodomesticos[], string diaSemana[])
+{
     cout << "\n===REGISTRO DE CONSUMO===\n";
-    for (int i = 0; i < dias; i++)
+    
+    // Encabezado de días
+    cout << setw(15) << left << "Electrodomestico";
+    for (int i = 0; i < DIAS; i++)
     {
-        cout << "\t\t";
-        cout << diaSemana[i] << "\t";
+        cout << setw(12) << right << diaSemana[i];
     }
     cout << endl;
 
-    for (int i = 0; i < aparatos; i++)
+    // Datos de consumo
+    for (int i = 0; i < APARATOS; i++)
     {
-        cout << electrodomesticos[i] << "\t";
-        for (int j = 0; j < dias; j++)
+        cout << setw(15) << left << electrodomesticos[i];
+        for (int j = 0; j < DIAS; j++)
         {
-            cout << registro[i][j] << "\t\t\t";
+            cout << setw(12) << right << registro[i][j];
         }
         cout << endl;
     }
+}
 
-    // calcular consumo total
-    for (int i = 0; i < aparatos; i++)
+void calcularConsumoPorElectrodomestico(float registro[][DIAS], float consumoSemana[])
+{
+    float suma;
+    for (int i = 0; i < APARATOS; i++)
     {
-        for (int j = 0; j < dias; j++)
+        suma = 0;
+        for (int j = 0; j < DIAS; j++)
         {
             suma += registro[i][j];
         }
         consumoSemana[i] = suma;
     }
+}
 
-    // suma total consumo
+int calcularConsumoTotal(float consumoSemana[])
+{
     int sumaTotal = 0;
-    for (int i = 0; i < aparatos; i++)
+    for (int i = 0; i < APARATOS; i++)
     {
         sumaTotal += consumoSemana[i];
     }
-    cout << "\nEl total del consumo general por los tres electrodomesticos es: " << sumaTotal << endl;
+    return sumaTotal;
+}
 
-    //promedio
-    for (int i = 0; i < aparatos; i++)
+void mostrarPromedios(float consumoSemana[], string electrodomesticos[])
+{
+    cout << "\n===PROMEDIOS POR ELECTRODOMESTICO===\n";
+    for (int i = 0; i < APARATOS; i++)
     {
-        cout << "El promedio del electrodomestico " << electrodomesticos[i] << " es " << consumoSemana[i] / dias << endl;
+        cout << "El promedio del electrodomestico " << electrodomesticos[i] 
+             << " es " << consumoSemana[i] / DIAS << endl;
     }
+}
 
-    mayor = consumoSemana[0];
-    for (int i = 0; i < aparatos; i++)
+void encontrarMayorConsumo(float consumoSemana[], string electrodomesticos[])
+{
+    float mayor = consumoSemana[0];
+    int indiceMayor = 0;
+    
+    for (int i = 1; i < APARATOS; i++)
     {
         if (consumoSemana[i] > mayor)
         {
             mayor = consumoSemana[i];
+            indiceMayor = i;
         }
-        cout << "El electrodomestico que más consume es " << electrodomesticos[i] << " con un valor semanal de " << mayor << endl;
     }
+    
+    cout << "\nEl electrodomestico que más consume es " << electrodomesticos[indiceMayor] 
+         << " con un valor semanal de " << mayor << endl;
+}
 
+void mostrarRecomendacion(int sumaTotal)
+{
+    cout << "\n===RECOMENDACION===\n";
     if (sumaTotal > 150)
     {
         cout << "Disminuye la energía" << endl;
     }
+    else
+    {
+        cout << "Consumo dentro de rangos normales" << endl;
+    }
+}
+
+int main()
+{
+    int const APARATOS = 3;
+    int const DIAS = 7;
+    string electrodomesticos[APARATOS] = {"Refrigerador", "Lavadora", "Televisor"};
+    string diaSemana[DIAS] = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
+    float registro[APARATOS][DIAS];
+    float consumoSemana[APARATOS];
+    int sumaTotal;
+
+    // Leer datos de consumo
+    leerDatosConsumo(registro, electrodomesticos, diaSemana);
+    
+    // Mostrar registro
+    mostrarRegistroConsumo(registro, electrodomesticos, diaSemana);
+    
+    // Calcular consumos
+    calcularConsumoPorElectrodomestico(registro, consumoSemana);
+    sumaTotal = calcularConsumoTotal(consumoSemana);
+    
+    // Mostrar resultados
+    cout << "\nEl total del consumo general por los tres electrodomesticos es: " << sumaTotal << endl;
+    
+    mostrarPromedios(consumoSemana, electrodomesticos);
+    encontrarMayorConsumo(consumoSemana, electrodomesticos);
+    mostrarRecomendacion(sumaTotal);
 
     return 0;
 }
