@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-const int MAX_PRODUCTOS = 100;
+const int MAX_PRODUCTOS = 10;
 
 // Prototipos de funciones
 string aMinusculas(string texto);
