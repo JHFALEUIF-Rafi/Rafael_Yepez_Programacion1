@@ -4,9 +4,7 @@
 #include <cctype> // para tolower
 using namespace std;
 
-const int MAX_PRODUCTOS = 10;
-
-// Función para convertir a minúsculas (para búsqueda case-insensitive)
+// Función para convertir a minúsculas
 string aMinusculas(string texto)
 {
     for (char &c : texto)
@@ -115,7 +113,7 @@ void buscarPorNombre(string nombres[], double precios[], int cantidad)
         return;
     }
 
-    cin.ignore(); 
+    cin.ignore();
     string nombreBuscado;
     cout << "Ingrese el nombre del producto a buscar: ";
     getline(cin, nombreBuscado);
@@ -126,7 +124,7 @@ void buscarPorNombre(string nombres[], double precios[], int cantidad)
     cout << "\n--- RESULTADOS DE BUSQUEDA ---" << endl;
     for (int i = 0; i < cantidad; i++)
     {
-        if (aMinusculas(nombres[i]).find(nombreBuscadoMin) != string::npos)
+        if (aMinusculas(nombres[i]) == nombreBuscado)
         {
             cout << "Producto encontrado: " << nombres[i] << " - $" << precios[i] << endl;
             encontrado = true;
@@ -191,6 +189,7 @@ void mostrarMenu()
 
 int main()
 {
+    const int MAX_PRODUCTOS = 10;
     string nombres[MAX_PRODUCTOS];
     double precios[MAX_PRODUCTOS];
     int cantidad;
@@ -208,13 +207,12 @@ int main()
 
     ingresarNombres(nombres, cantidad);
     ingresarPrecios(precios, cantidad);
-
-    // Ordenar los productos por precio antes de mostrar
     ordenarPorPrecio(nombres, precios, cantidad);
 
     int opcion;
     do
     {
+        double total, promedio;
         mostrarMenu();
         cin >> opcion;
 
@@ -230,20 +228,17 @@ int main()
             mostrarInventario(nombres, precios, cantidad);
             break;
         case 4:
-            // Calcular y mostrar estadísticas
+
             cout << "\n--- ESTADISTICAS DEL INVENTARIO ---" << endl;
             cout << fixed << setprecision(2);
 
-            // Precio total
-            double total = calcularPrecioTotal(precios, cantidad);
+            total = calcularPrecioTotal(precios, cantidad);
             cout << "Precio total del inventario: $" << total << endl;
 
-            // Producto más barato y más caro (ahora en posiciones fijas)
             cout << "Producto mas barato: " << nombres[0] << " - $" << precios[0] << endl;
             cout << "Producto mas caro: " << nombres[cantidad - 1] << " - $" << precios[cantidad - 1] << endl;
 
-            // Precio promedio
-            double promedio = calcularPrecioPromedio(precios, cantidad);
+            promedio = calcularPrecioPromedio(precios, cantidad);
             cout << "Precio promedio: $" << promedio << endl;
             break;
         case 5:

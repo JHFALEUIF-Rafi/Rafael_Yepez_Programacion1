@@ -97,7 +97,13 @@ double calcularPrecioPromedio(double precios[], int cantidad)
 {
     if (cantidad == 0)
         return 0;
-    return calcularPrecioTotal(precios, cantidad) / cantidad;
+
+    double total = 0;
+    for (int i = 0; i < cantidad; i++)
+    {
+        total += precios[i];
+    }
+    return total / cantidad;
 }
 
 // Función para buscar producto por nombre
@@ -143,7 +149,7 @@ void buscarPorPrecio(string nombres[], double precios[], int cantidad)
     }
 
     double precioBuscado;
-    cout << "Ingrese el precio a buscar: $";
+    cout << "Ingrese el precio exacto a buscar: $";
     cin >> precioBuscado;
 
     if (precioBuscado <= 0)
@@ -152,13 +158,13 @@ void buscarPorPrecio(string nombres[], double precios[], int cantidad)
         return;
     }
 
-    double tolerancia = 0.01;
     bool encontrado = false;
 
     cout << "\n--- RESULTADOS DE BUSQUEDA ---" << endl;
     for (int i = 0; i < cantidad; i++)
     {
-        if (abs(precios[i] - precioBuscado) < tolerancia)
+        // Búsqueda exacta sin tolerancia
+        if (precios[i] == precioBuscado)
         {
             cout << "Producto encontrado: " << nombres[i] << " - $" << precios[i] << endl;
             encontrado = true;
@@ -167,7 +173,7 @@ void buscarPorPrecio(string nombres[], double precios[], int cantidad)
 
     if (!encontrado)
     {
-        cout << "No se encontraron productos con precio: $" << precioBuscado << endl;
+        cout << "No se encontraron productos con precio exacto: $" << precioBuscado << endl;
     }
 }
 
