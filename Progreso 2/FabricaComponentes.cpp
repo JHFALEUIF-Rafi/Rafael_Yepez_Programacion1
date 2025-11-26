@@ -19,7 +19,7 @@ void ingresarPositivo(int &valor, string tipo)
     } while (valor <= 0);
 }
 
-//Función para ingresar nombre
+// Función para ingresar nombre
 void ingresarNombre(string &nombre)
 {
     bool validar;
@@ -56,14 +56,49 @@ void ingresarProducto(string &nombre, int &demanda, int &tiempo, int &recursos, 
     cout << "------------------------";
 }
 
-// Función para buscar producto por nombre
+// Función para buscar producto por nombre y mostrar resultados
+void buscarPorNombre(string nombres[], int demandas[], int tiempos[], int recursos[], int contador)
+{
+    if (contador == 0)
+    {
+        cout << "No hay productos registrados." << endl;
+        return;
+    }
+
+    cin.ignore();
+    string nombreBuscado;
+    cout << "Ingrese el nombre del producto a buscar: ";
+    getline(cin, nombreBuscado);
+
+    bool encontrado = false;
+
+    cout << "\n--- RESULTADOS DE BUSQUEDA ---" << endl;
+    for (int i = 0; i < contador; i++)
+    {
+        if (nombres[i] == nombreBuscado)
+        {
+            cout << "Producto encontrado: " << nombres[i]
+                 << " - Demanda: " << demandas[i]
+                 << ", Tiempo: " << tiempos[i]
+                 << ", Recursos: " << recursos[i] << endl;
+            encontrado = true;
+        }
+    }
+
+    if (!encontrado)
+    {
+        cout << "No se encontraron productos con el nombre: " << nombreBuscado << endl;
+    }
+}
+
+// Función para buscar producto por nombre (para editar/eliminar)
 int buscarProducto(string nombres[], string nombreBuscado, int contador)
 {
     for (int i = 0; i < contador; i++)
     {
         if (nombres[i] == nombreBuscado)
         {
-            return i; 
+            return i;
         }
     }
     return -1;
@@ -109,9 +144,9 @@ void editarProducto(string nombres[], int demandas[], int tiempos[], int recurso
         ingresarPositivo(recursos[posicion], "Nuevos recursos por unidad");
         break;
     default:
-        cout << "Opcion invalida!\n";
+        cout << "Opcion invalida"<<endl;
     }
-    cout << "Producto editado correctamente!\n";
+    cout << "Producto editado correctamente"<<endl;
 }
 
 // Función para eliminar producto
@@ -138,13 +173,12 @@ void eliminarProducto(string nombres[], int demandas[], int tiempos[], int recur
         recursos[i] = recursos[i + 1];
     }
 
-    contador--; 
+    contador--;
     cout << "Producto eliminado correctamente!\n";
 }
 
 // Función para calcular tiempos y recursos totales
-void calcularTotales(string nombres[], int demandas[], int tiempos[],
-                     int recursos[], int contador, int &tiempoTotal, int &recursosTotal)
+void calcularTotales(string nombres[], int demandas[], int tiempos[], int recursos[], int contador, int &tiempoTotal, int &recursosTotal)
 {
     tiempoTotal = 0;
     recursosTotal = 0;
@@ -203,8 +237,7 @@ void mostrarProductos(string nombres[], int demandas[], int tiempos[], int recur
     cout << "\n=== PRODUCTOS REGISTRADOS ===\n";
     for (int i = 0; i < contador; i++)
     {
-        cout << (i + 1) << ". " << nombres[i] << " - Demanda: " << demandas[i]
-             << ", Tiempo: " << tiempos[i] << ", Recursos: " << recursos[i] << endl;
+        cout << (i + 1) << ". " << nombres[i] << " - Demanda: " << demandas[i] << ", Tiempo: " << tiempos[i] << ", Recursos: " << recursos[i] << endl;
     }
 }
 
@@ -213,11 +246,12 @@ void mostrarMenu()
 {
     cout << "\n=== MENU PRINCIPAL ===\n";
     cout << "1. Mostrar productos\n";
-    cout << "2. Editar producto\n";
-    cout << "3. Eliminar producto\n";
-    cout << "4. Calcular totales\n";
-    cout << "5. Verificar capacidad\n";
-    cout << "6. Salir\n";
+    cout << "2. Buscar producto por nombre\n";
+    cout << "3. Editar producto\n";
+    cout << "4. Eliminar producto\n";
+    cout << "5. Calcular totales\n";
+    cout << "6. Verificar capacidad\n";
+    cout << "7. Salir\n";
     cout << "Opcion: ";
 }
 
@@ -233,13 +267,11 @@ int main()
 
     cout << "=== SISTEMA DE PRODUCCION ===\n\n";
 
-    // Ingreso inicial de datos
     for (int i = 0; i < MAX_PRODUCTOS; i++)
     {
         ingresarProducto(nombres[i], demandas[i], tiempos[i], recursos[i], i);
     }
 
-    // Menú principal
     do
     {
         mostrarMenu();
@@ -251,26 +283,29 @@ int main()
             mostrarProductos(nombres, demandas, tiempos, recursos, contador);
             break;
         case 2:
-            editarProducto(nombres, demandas, tiempos, recursos, contador);
+            buscarPorNombre(nombres, demandas, tiempos, recursos, contador);
             break;
         case 3:
-            eliminarProducto(nombres, demandas, tiempos, recursos, contador);
+            editarProducto(nombres, demandas, tiempos, recursos, contador);
             break;
         case 4:
-            calcularTotales(nombres, demandas, tiempos, recursos, contador, tiempoTotal, recursosTotal);
-            mostrarResultados(tiempoTotal, recursosTotal);
+            eliminarProducto(nombres, demandas, tiempos, recursos, contador);
             break;
         case 5:
             calcularTotales(nombres, demandas, tiempos, recursos, contador, tiempoTotal, recursosTotal);
-            verificarCapacidad(tiempoTotal, recursosTotal);
+            mostrarResultados(tiempoTotal, recursosTotal);
             break;
         case 6:
+            calcularTotales(nombres, demandas, tiempos, recursos, contador, tiempoTotal, recursosTotal);
+            verificarCapacidad(tiempoTotal, recursosTotal);
+            break;
+        case 7:
             cout << "Saliendo del sistema...\n";
             break;
         default:
             cout << "Opcion invalida!\n";
         }
-    } while (opcion != 6);
+    } while (opcion != 7);
 
     return 0;
 }
