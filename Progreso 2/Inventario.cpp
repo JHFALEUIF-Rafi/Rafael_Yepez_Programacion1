@@ -1,116 +1,68 @@
 #include <iostream>
 #include <string>
-#include <iomanip>
-#include <cctype> // para tolower
+#include <cctype>
 using namespace std;
 
-// Función para convertir a minúsculas
-string aMinusculas(string texto)
-{
-    for (char &c : texto)
-    {
-        c = tolower(c);
-    }
-    return texto;
-}
+const int MAX_PRODUCTOS = 5;
 
-// Función para ingresar nombres de productos
-void ingresarNombres(string nombres[], int cantidad)
+// Función para ingresar número positivo
+void ingresarPositivo(int &valor, string tipo)
 {
-    cout << "\n--- INGRESO DE NOMBRES DE PRODUCTOS ---" << endl;
-    for (int i = 0; i < cantidad; i++)
+    do
     {
-        cout << "Ingrese el nombre del producto " << (i + 1) << ": ";
-        cin.ignore();
-        getline(cin, nombres[i]);
-    }
-}
-
-// Función para ingresar y validar precios
-void ingresarPrecios(double precios[], int cantidad)
-{
-    cout << "\n--- INGRESO DE PRECIOS ---" << endl;
-    for (int i = 0; i < cantidad; i++)
-    {
-        do
+        cout << tipo << ": ";
+        cin >> valor;
+        if (valor <= 0)
         {
-            cout << "Ingrese el precio para el producto " << (i + 1) << ": $";
-            cin >> precios[i];
-
-            if (precios[i] <= 0)
-            {
-                cout << "Ingrese un precio válido" << endl;
-            }
-        } while (precios[i] <= 0);
-    }
+            cout << "El valor ingresado no es positivo\n";
+        }
+    } while (valor <= 0);
 }
 
-// Función para ordenar por precio usando método burbuja
-void ordenarPorPrecio(string nombres[], double precios[], int cantidad)
+//Función para ingresar nombre
+void ingresarNombre(string &nombre)
 {
-    for (int i = 0; i < cantidad - 1; i++)
+    bool validar;
+    do
     {
-        for (int j = 0; j < cantidad - i - 1; j++)
-        {
-            if (precios[j] > precios[j + 1])
-            {
-                // Intercambiar precios
-                double tempPrecio = precios[j];
-                precios[j] = precios[j + 1];
-                precios[j + 1] = tempPrecio;
+        cout << "Nombre (sin numeros): ";
+        cin >> nombre;
 
-                // Intercambiar nombres para mantener la sincronización
-                string tempNombre = nombres[j];
-                nombres[j] = nombres[j + 1];
-                nombres[j + 1] = tempNombre;
+        validar = false;
+        for (char c : nombre)
+        {
+            if (isdigit(c))
+            {
+                validar = true;
+                break;
             }
         }
-    }
+
+        if (validar)
+        {
+            cout << "El nombre no puede contener caracteres numericos\n";
+        }
+    } while (validar);
 }
 
-// Función para mostrar todos los productos
-void mostrarInventario(string nombres[], double precios[], int cantidad)
+// Función para ingresar datos de un producto
+void ingresarProducto(string &nombre, int &demanda, int &tiempo, int &recursos, int indice)
 {
-    cout << "\n--- INVENTARIO COMPLETO ---" << endl;
-    cout << fixed << setprecision(2);
-    for (int i = 0; i < cantidad; i++)
-    {
-        cout << "Producto " << (i + 1) << ": " << nombres[i] << " - $" << precios[i] << endl;
-    }
+    cout << "\nProducto " << (indice + 1) << ":\n";
+    ingresarNombre(nombre);
+    ingresarPositivo(demanda, "Cantidad demandada");
+    ingresarPositivo(tiempo, "Tiempo de fabricacion por unidad");
+    ingresarPositivo(recursos, "Recursos por unidad");
+    cout << "------------------------";
 }
 
-// Función para calcular el precio total del inventario
-double calcularPrecioTotal(double precios[], int cantidad)
+// Función para buscar producto por nombre (EXACTA como tu ejemplo)
+int buscarPorNombre(string nombres[], int demandas[], int tiempos[], int recursos[], int contador)
 {
-    double total = 0;
-    for (int i = 0; i < cantidad; i++)
+    if (contador == 0)
     {
-        total += precios[i];
-    }
-    return total;
-}
-
-// Función para calcular el precio promedio
-double calcularPrecioPromedio(double precios[], int cantidad)
-{
-    if (cantidad == 0)
-        return 0;
-
-    double total = 0;
-    for (int i = 0; i < cantidad; i++)
-    {
-        total += precios[i];
-    }
-    return total / cantidad;
-}
-
-// Función para buscar producto por nombre
-void buscarPorNombre(string nombres[], double precios[], int cantidad)
-{
-    if (cantidad == 0)
-    {
-        cout << "El inventario esta vacio." << endl;
-        return;
+        cout << "No hay productos registrados." << endl;
+        return -1;
     }
 
     cin.ignore();
@@ -118,136 +70,238 @@ void buscarPorNombre(string nombres[], double precios[], int cantidad)
     cout << "Ingrese el nombre del producto a buscar: ";
     getline(cin, nombreBuscado);
 
-    string nombreBuscadoMin = aMinusculas(nombreBuscado);
     bool encontrado = false;
+    int posicionEncontrado = -1;
 
     cout << "\n--- RESULTADOS DE BUSQUEDA ---" << endl;
-    for (int i = 0; i < cantidad; i++)
+    for (int i = 0; i < contador; i++)
     {
-        if (aMinusculas(nombres[i]) == nombreBuscado)
+        if (nombres[i] == nombreBuscado)
         {
-            cout << "Producto encontrado: " << nombres[i] << " - $" << precios[i] << endl;
+            cout << "Producto encontrado: " << nombres[i] 
+                 << " - Demanda: " << demandas[i]
+                 << ", Tiempo: " << tiempos[i] 
+                 << ", Recursos: " << recursos[i] << endl;
             encontrado = true;
+            posicionEncontrado = i;
+            break; // Encuentra solo el primero
         }
     }
 
     if (!encontrado)
     {
         cout << "No se encontraron productos con el nombre: " << nombreBuscado << endl;
+        return -1;
+    }
+
+    return posicionEncontrado;
+}
+
+// Función para editar producto
+void editarProducto(string nombres[], int demandas[], int tiempos[], int recursos[], int contador)
+{
+    cout << "\n=== EDITAR PRODUCTO ===" << endl;
+    int posicion = buscarPorNombre(nombres, demandas, tiempos, recursos, contador);
+
+    if (posicion == -1)
+    {
+        return; // Producto no encontrado
+    }
+
+    cout << "\nEditando producto: " << nombres[posicion] << endl;
+    cout << "1. Cambiar nombre\n";
+    cout << "2. Cambiar cantidad demandada\n";
+    cout << "3. Cambiar tiempo de fabricacion\n";
+    cout << "4. Cambiar recursos por unidad\n";
+    cout << "Opcion: ";
+
+    int opcion;
+    cin >> opcion;
+
+    switch (opcion)
+    {
+    case 1:
+        ingresarNombre(nombres[posicion]);
+        break;
+    case 2:
+        ingresarPositivo(demandas[posicion], "Nueva cantidad demandada");
+        break;
+    case 3:
+        ingresarPositivo(tiempos[posicion], "Nuevo tiempo de fabricacion");
+        break;
+    case 4:
+        ingresarPositivo(recursos[posicion], "Nuevos recursos por unidad");
+        break;
+    default:
+        cout << "Opcion invalida!\n";
+    }
+    cout << "Producto editado correctamente!\n";
+}
+
+// Función para eliminar producto
+void eliminarProducto(string nombres[], int demandas[], int tiempos[], int recursos[], int &contador)
+{
+    cout << "\n=== ELIMINAR PRODUCTO ===" << endl;
+    int posicion = buscarPorNombre(nombres, demandas, tiempos, recursos, contador);
+
+    if (posicion == -1)
+    {
+        return; // Producto no encontrado
+    }
+
+    // Confirmar eliminación
+    cout << "\n¿Está seguro de eliminar el producto '" << nombres[posicion] << "'? (s/n): ";
+    char confirmar;
+    cin >> confirmar;
+
+    if (confirmar == 's' || confirmar == 'S')
+    {
+        // Mover todos los elementos una posición hacia atrás
+        for (int i = posicion; i < contador - 1; i++)
+        {
+            nombres[i] = nombres[i + 1];
+            demandas[i] = demandas[i + 1];
+            tiempos[i] = tiempos[i + 1];
+            recursos[i] = recursos[i + 1];
+        }
+
+        contador--; 
+        cout << "Producto eliminado correctamente!\n";
+    }
+    else
+    {
+        cout << "Eliminación cancelada.\n";
     }
 }
 
-// Función para buscar productos por precio
-void buscarPorPrecio(string nombres[], double precios[], int cantidad)
+// Función para calcular tiempos y recursos totales
+void calcularTotales(string nombres[], int demandas[], int tiempos[], int recursos[], int contador, int &tiempoTotal, int &recursosTotal)
 {
-    if (cantidad == 0)
+    tiempoTotal = 0;
+    recursosTotal = 0;
+
+    for (int i = 0; i < contador; i++)
     {
-        cout << "El inventario esta vacio." << endl;
-        return;
+        tiempoTotal += demandas[i] * tiempos[i];
+        recursosTotal += demandas[i] * recursos[i];
     }
+}
 
-    double precioBuscado;
-    cout << "Ingrese el precio exacto a buscar: $";
-    cin >> precioBuscado;
+// Función para verificar capacidad
+void verificarCapacidad(int tiempoTotal, int recursosTotal)
+{
+    int tiempoDisponible, recursosDisponibles;
 
-    if (precioBuscado <= 0)
+    cout << "\n=== VERIFICACION DE CAPACIDAD ===\n";
+    cout << "Tiempo total requerido: " << tiempoTotal << " unidades\n";
+    cout << "Recursos totales necesarios: " << recursosTotal << " unidades\n";
+
+    cout << "\nIngrese tiempo disponible de produccion: ";
+    cin >> tiempoDisponible;
+    cout << "Ingrese recursos disponibles: ";
+    cin >> recursosDisponibles;
+
+    cout << "\n=== RESULTADO ===\n";
+    if (tiempoTotal <= tiempoDisponible && recursosTotal <= recursosDisponibles)
     {
-        cout << "Error: El precio debe ser positivo." << endl;
-        return;
+        cout << "La fabrica PUEDE cumplir con la demanda!\n";
     }
-
-    bool encontrado = false;
-
-    cout << "\n--- RESULTADOS DE BUSQUEDA ---" << endl;
-    for (int i = 0; i < cantidad; i++)
+    else
     {
-        // Búsqueda exacta sin tolerancia
-        if (precios[i] == precioBuscado)
+        cout << "La fabrica NO puede cumplir con la demanda\n";
+        if (tiempoTotal > tiempoDisponible)
         {
-            cout << "Producto encontrado: " << nombres[i] << " - $" << precios[i] << endl;
-            encontrado = true;
+            cout << " - Faltan " << (tiempoTotal - tiempoDisponible) << " unidades de tiempo\n";
+        }
+        if (recursosTotal > recursosDisponibles)
+        {
+            cout << " - Faltan " << (recursosTotal - recursosDisponibles) << " unidades de recursos\n";
         }
     }
+}
 
-    if (!encontrado)
+// Función para mostrar resultados
+void mostrarResultados(int tiempoTotal, int recursosTotal)
+{
+    cout << "\n=== RESULTADOS ===\n";
+    cout << "Tiempo total requerido: " << tiempoTotal << " unidades\n";
+    cout << "Recursos totales necesarios: " << recursosTotal << " unidades\n";
+}
+
+// Función para mostrar todos los productos
+void mostrarProductos(string nombres[], int demandas[], int tiempos[], int recursos[], int contador)
+{
+    cout << "\n=== PRODUCTOS REGISTRADOS ===\n";
+    for (int i = 0; i < contador; i++)
     {
-        cout << "No se encontraron productos con precio exacto: $" << precioBuscado << endl;
+        cout << (i + 1) << ". " << nombres[i] << " - Demanda: " << demandas[i]
+             << ", Tiempo: " << tiempos[i] << ", Recursos: " << recursos[i] << endl;
     }
 }
 
-// Función para mostrar el menú de opciones
+// Menú principal
 void mostrarMenu()
 {
-    cout << "\n=== MENU DE OPCIONES ===" << endl;
-    cout << "1. Buscar producto por nombre" << endl;
-    cout << "2. Buscar producto por precio" << endl;
-    cout << "3. Mostrar inventario completo" << endl;
-    cout << "4. Mostrar estadisticas" << endl;
-    cout << "5. Salir" << endl;
-    cout << "Seleccione una opcion: ";
+    cout << "\n=== MENU PRINCIPAL ===\n";
+    cout << "1. Mostrar productos\n";
+    cout << "2. Editar producto\n";
+    cout << "3. Eliminar producto\n";
+    cout << "4. Calcular totales\n";
+    cout << "5. Verificar capacidad\n";
+    cout << "6. Salir\n";
+    cout << "Opcion: ";
 }
 
 int main()
 {
-    const int MAX_PRODUCTOS = 10;
     string nombres[MAX_PRODUCTOS];
-    double precios[MAX_PRODUCTOS];
-    int cantidad;
+    int demandas[MAX_PRODUCTOS];
+    int tiempos[MAX_PRODUCTOS];
+    int recursos[MAX_PRODUCTOS];
+    int tiempoTotal, recursosTotal;
+    int contador = MAX_PRODUCTOS;
+    int opcion;
 
-    cout << "=== SISTEMA DE GESTION DE INVENTARIO ===" << endl;
-    cout << "Cuantos productos desea ingresar? (max " << MAX_PRODUCTOS << "): ";
-    cin >> cantidad;
+    cout << "=== SISTEMA DE PRODUCCION ===\n\n";
 
-    // Validar que no exceda el máximo
-    if (cantidad > MAX_PRODUCTOS || cantidad <= 0)
+    // Ingreso inicial de datos
+    for (int i = 0; i < MAX_PRODUCTOS; i++)
     {
-        cout << "Cantidad invalida!" << endl;
-        return 1;
+        ingresarProducto(nombres[i], demandas[i], tiempos[i], recursos[i], i);
     }
 
-    ingresarNombres(nombres, cantidad);
-    ingresarPrecios(precios, cantidad);
-    ordenarPorPrecio(nombres, precios, cantidad);
-
-    int opcion;
+    // Menú principal
     do
     {
-        double total, promedio;
         mostrarMenu();
         cin >> opcion;
 
         switch (opcion)
         {
         case 1:
-            buscarPorNombre(nombres, precios, cantidad);
+            mostrarProductos(nombres, demandas, tiempos, recursos, contador);
             break;
         case 2:
-            buscarPorPrecio(nombres, precios, cantidad);
+            editarProducto(nombres, demandas, tiempos, recursos, contador);
             break;
         case 3:
-            mostrarInventario(nombres, precios, cantidad);
+            eliminarProducto(nombres, demandas, tiempos, recursos, contador);
             break;
         case 4:
-
-            cout << "\n--- ESTADISTICAS DEL INVENTARIO ---" << endl;
-            cout << fixed << setprecision(2);
-
-            total = calcularPrecioTotal(precios, cantidad);
-            cout << "Precio total del inventario: $" << total << endl;
-
-            cout << "Producto mas barato: " << nombres[0] << " - $" << precios[0] << endl;
-            cout << "Producto mas caro: " << nombres[cantidad - 1] << " - $" << precios[cantidad - 1] << endl;
-
-            promedio = calcularPrecioPromedio(precios, cantidad);
-            cout << "Precio promedio: $" << promedio << endl;
+            calcularTotales(nombres, demandas, tiempos, recursos, contador, tiempoTotal, recursosTotal);
+            mostrarResultados(tiempoTotal, recursosTotal);
             break;
         case 5:
-            cout << "¡Gracias por usar el sistema!" << endl;
+            calcularTotales(nombres, demandas, tiempos, recursos, contador, tiempoTotal, recursosTotal);
+            verificarCapacidad(tiempoTotal, recursosTotal);
+            break;
+        case 6:
+            cout << "Saliendo del sistema...\n";
             break;
         default:
-            cout << "Opcion invalida. Intente nuevamente." << endl;
+            cout << "Opcion invalida!\n";
         }
-    } while (opcion != 5);
+    } while (opcion != 6);
 
     return 0;
 }
