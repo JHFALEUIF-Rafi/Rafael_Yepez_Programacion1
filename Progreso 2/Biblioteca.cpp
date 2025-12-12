@@ -40,16 +40,16 @@ int buscarLibroPorID(const Libro biblioteca[], int totalLibros, const string &id
 
 void mostrarMenu()
 {
-    cout << "\n================================\n";
-    cout << "   GESTION DE BIBLIOTECA\n";
-    cout << "================================\n";
-    cout << "1. Registrar nuevo libro\n";
-    cout << "2. Mostrar todos los libros\n";
-    cout << "3. Buscar libro\n";
-    cout << "4. Actualizar estado\n";
-    cout << "5. Eliminar libro\n";
-    cout << "6. Salir\n";
-    cout << "================================\n";
+    cout << "\n================================"<<endl;
+    cout << "   GESTION DE BIBLIOTECA"<<endl;
+    cout << "================================"<<endl;
+    cout << "1. Registrar nuevo libro"<<endl;
+    cout << "2. Mostrar todos los libros"<<endl;
+    cout << "3. Buscar libro"<<endl;
+    cout << "4. Actualizar estado"<<endl;
+    cout << "5. Eliminar libro"<<endl;
+    cout << "6. Salir"<<endl;
+    cout << "================================"<<endl;
 }
 
 bool esNumero(const string &str)
