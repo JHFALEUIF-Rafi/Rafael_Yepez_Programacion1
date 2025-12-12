@@ -11,15 +11,24 @@ struct Paciente
     int edad;
 };
 
-int main()
+void ingresarPacientes(Paciente pacientes[], int MAX_PACIENTES)
 {
-    struct Paciente pacientes[MAX_PACIENTES];
-    int frecuenciaMaxima;
-    float imc;
-
     cout << "===Registro de Paciente===" << endl;
+    int num;
 
-    for (int i = 0; i < MAX_PACIENTES; i++)
+    do
+    {
+        cout << "Ingrese el numero de pacientes a registrar (maximo " << MAX_PACIENTES << "): ";
+        cin >> num;
+        cin.ignore();
+        if (num < 1 || num > MAX_PACIENTES)
+        {
+            cout << "Numero invalido. Intente de nuevo." << endl;
+        }
+
+    } while (num < 1 || num > MAX_PACIENTES);
+
+    for (int i = 0; i < num; i++)
     {
         cout << "Ingrese el nombre del paciente: ";
         getline(cin, pacientes[i].nombre);
@@ -31,21 +40,24 @@ int main()
         cin >> pacientes[i].edad;
         cin.ignore();
     }
+}
 
-    frecuenciaMaxima = 220 - pacientes[0].edad;
-    imc = pacientes[0].peso / (pacientes[0].altura * pacientes[0].altura);
-
-    cout << "\n---Datos del Paciente---" << endl;
+void mostrarDatosPacientes(const Paciente pacientes[], int MAX_PACIENTES)
+{
     for (int i = 0; i < MAX_PACIENTES; i++)
     {
         cout << "Nombre: " << pacientes[i].nombre << endl;
         cout << "Peso: " << pacientes[i].peso << " kg" << endl;
         cout << "Altura: " << pacientes[i].altura << " m" << endl;
         cout << "Edad: " << pacientes[i].edad << " anios" << endl;
-        cout << "Frecuencia Cardiaca Maxima: " << frecuenciaMaxima << " latidos por minuto" << endl;
-        cout << "Indice de Masa Corporal (IMC): " << fixed << setprecision(2) << imc << endl;
         cout << endl;
     }
+}
 
+int main()
+{
+    struct Paciente pacientes[MAX_PACIENTES];
+    ingresarPacientes(pacientes, MAX_PACIENTES);
+    mostrarDatosPacientes(pacientes, MAX_PACIENTES);
     return 0;
 }
