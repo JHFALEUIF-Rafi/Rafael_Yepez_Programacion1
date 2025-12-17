@@ -10,7 +10,7 @@ struct Libro
     string id;
     string titulo;
     string autor;
-    string anoPublicacion;
+    string añoPublicacion;  // Cambiado de anoPublicacion
     string estado;
 };
 
@@ -109,35 +109,35 @@ void registrarLibro(Libro biblioteca[], int &totalLibros)
     cout << "Autor: ";
     getline(cin, autor);
 
-    string ano;
-    bool anoValido = false;
+    string año;
+    bool añoValido = false;  // Cambiado de anoValido
 
     // Validación del año
-    while (!anoValido)
+    while (!añoValido)
     {
-        cout << "Ano de publicacion: ";
-        cin >> ano;
+        cout << "Anio de publicacion: ";  // Cambiado a "Anio" para impresión
+        cin >> año;
 
-        if (!esNumero(ano))
+        if (!esNumero(año))
         {
-            cout << "Error: El ano debe contener solo numeros\n";
+            cout << "Error: El anio debe contener solo numeros\n";  // Cambiado a "anio"
         }
         else
         {
             // Verificar rango del año
-            int anoNum = 0;
-            for (int i = 0; i < ano.length(); i++)
+            int añoNum = 0;
+            for (int i = 0; i < año.length(); i++)
             {
-                anoNum = anoNum * 10 + (ano[i] - '0');
+                añoNum = añoNum * 10 + (año[i] - '0');
             }
 
-            if (anoNum < 0 || anoNum > 2024)
+            if (añoNum < 0 || añoNum > 2024)
             {
-                cout << "Error: Ingrese un ano valido (0-2024)\n";
+                cout << "Error: Ingrese un anio valido (0-2024)\n";  // Cambiado a "anio"
             }
             else
             {
-                anoValido = true;
+                añoValido = true;
             }
         }
     }
@@ -145,7 +145,7 @@ void registrarLibro(Libro biblioteca[], int &totalLibros)
     biblioteca[totalLibros].id = id;
     biblioteca[totalLibros].titulo = titulo;
     biblioteca[totalLibros].autor = autor;
-    biblioteca[totalLibros].anoPublicacion = ano;
+    biblioteca[totalLibros].añoPublicacion = año;  // Cambiado de anoPublicacion
     biblioteca[totalLibros].estado = "Disponible";
 
     totalLibros++;
@@ -165,7 +165,7 @@ void mostrarLibros(const Libro biblioteca[], int totalLibros)
     cout << left << setw(8) << "ID"
          << setw(25) << "TITULO"
          << setw(20) << "AUTOR"
-         << setw(8) << "ANO"
+         << setw(8) << "ANIO"  // Cambiado a "ANIO"
          << setw(12) << "ESTADO" << "\n";
     cout << "============================================================\n";
 
@@ -174,7 +174,7 @@ void mostrarLibros(const Libro biblioteca[], int totalLibros)
         cout << left << setw(8) << biblioteca[i].id
              << setw(25) << (biblioteca[i].titulo.length() > 22 ? biblioteca[i].titulo.substr(0, 22) + "..." : biblioteca[i].titulo)
              << setw(20) << (biblioteca[i].autor.length() > 17 ? biblioteca[i].autor.substr(0, 17) + "..." : biblioteca[i].autor)
-             << setw(8) << biblioteca[i].anoPublicacion
+             << setw(8) << biblioteca[i].añoPublicacion  // Cambiado de anoPublicacion
              << setw(12) << biblioteca[i].estado << "\n";
     }
     cout << "============================================================\n";
@@ -212,7 +212,7 @@ void buscarLibro(const Libro biblioteca[], int totalLibros)
             cout << "ID: " << biblioteca[indice].id << endl;
             cout << "Titulo: " << biblioteca[indice].titulo << endl;
             cout << "Autor: " << biblioteca[indice].autor << endl;
-            cout << "Ano: " << biblioteca[indice].anoPublicacion << endl;
+            cout << "Anio: " << biblioteca[indice].añoPublicacion << endl;  // Cambiado a "Anio"
             cout << "Estado: " << biblioteca[indice].estado << endl;
         }
         else
@@ -236,7 +236,7 @@ void buscarLibro(const Libro biblioteca[], int totalLibros)
                 cout << "ID: " << biblioteca[i].id << endl;
                 cout << "Titulo: " << biblioteca[i].titulo << endl;
                 cout << "Autor: " << biblioteca[i].autor << endl;
-                cout << "Ano: " << biblioteca[i].anoPublicacion << endl;
+                cout << "Anio: " << biblioteca[i].añoPublicacion << endl;  // Cambiado a "Anio"
                 cout << "Estado: " << biblioteca[i].estado << endl;
                 encontrado = true;
                 break; // Solo muestra el primero que encuentre
@@ -264,7 +264,7 @@ void buscarLibro(const Libro biblioteca[], int totalLibros)
                 cout << "ID: " << biblioteca[i].id << endl;
                 cout << "Titulo: " << biblioteca[i].titulo << endl;
                 cout << "Autor: " << biblioteca[i].autor << endl;
-                cout << "Ano: " << biblioteca[i].anoPublicacion << endl;
+                cout << "Anio: " << biblioteca[i].añoPublicacion << endl;  // Cambiado a "Anio"
                 cout << "Estado: " << biblioteca[i].estado << endl;
                 encontrado = true;
                 break; // Solo muestra el primero que encuentre
