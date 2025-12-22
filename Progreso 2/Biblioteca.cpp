@@ -10,7 +10,7 @@ struct Libro
     string id;
     string titulo;
     string autor;
-    string añoPublicacion;  
+    string añoPublicacion;
     string estado;
 };
 
@@ -40,16 +40,16 @@ int buscarLibroPorID(const Libro biblioteca[], int totalLibros, const string &id
 
 void mostrarMenu()
 {
-    cout << "\n================================"<<endl;
-    cout << "   GESTION DE BIBLIOTECA"<<endl;
-    cout << "================================"<<endl;
-    cout << "1. Registrar nuevo libro"<<endl;
-    cout << "2. Mostrar todos los libros"<<endl;
-    cout << "3. Buscar libro"<<endl;
-    cout << "4. Actualizar estado"<<endl;
-    cout << "5. Eliminar libro"<<endl;
-    cout << "6. Salir"<<endl;
-    cout << "================================"<<endl;
+    cout << "\n================================" << endl;
+    cout << "   GESTION DE BIBLIOTECA" << endl;
+    cout << "================================" << endl;
+    cout << "1. Registrar nuevo libro" << endl;
+    cout << "2. Mostrar todos los libros" << endl;
+    cout << "3. Buscar libro" << endl;
+    cout << "4. Actualizar estado" << endl;
+    cout << "5. Eliminar libro" << endl;
+    cout << "6. Salir" << endl;
+    cout << "================================" << endl;
 }
 
 bool esNumero(const string &str)
@@ -79,7 +79,6 @@ void registrarLibro(Libro biblioteca[], int &totalLibros)
     string id;
     bool idValido = false;
 
-    // Validación del ID
     while (!idValido)
     {
         cout << "ID del libro: ";
@@ -99,7 +98,7 @@ void registrarLibro(Libro biblioteca[], int &totalLibros)
         }
     }
 
-    cin.ignore(); 
+    cin.ignore();
 
     string titulo;
     cout << "Titulo: ";
@@ -110,21 +109,19 @@ void registrarLibro(Libro biblioteca[], int &totalLibros)
     getline(cin, autor);
 
     string año;
-    bool añoValido = false;  
-
+    bool añoValido = false;
 
     while (!añoValido)
     {
-        cout << "Anio de publicacion: ";  
+        cout << "Anio de publicacion: ";
         cin >> año;
 
         if (!esNumero(año))
         {
-            cout << "Error: El anio debe contener solo numeros\n";  
+            cout << "Error: El anio debe contener solo numeros\n";
         }
         else
         {
-            // Verificar rango del año
             int añoNum = 0;
             for (int i = 0; i < año.length(); i++)
             {
@@ -133,7 +130,7 @@ void registrarLibro(Libro biblioteca[], int &totalLibros)
 
             if (añoNum < 0 || añoNum > 2024)
             {
-                cout << "Error: Ingrese un anio valido (0-2024)\n";  
+                cout << "Error: Ingrese un anio valido (0-2024)\n";
             }
             else
             {
@@ -145,7 +142,7 @@ void registrarLibro(Libro biblioteca[], int &totalLibros)
     biblioteca[totalLibros].id = id;
     biblioteca[totalLibros].titulo = titulo;
     biblioteca[totalLibros].autor = autor;
-    biblioteca[totalLibros].añoPublicacion = año;  
+    biblioteca[totalLibros].añoPublicacion = año;
     biblioteca[totalLibros].estado = "Disponible";
 
     totalLibros++;
@@ -165,7 +162,7 @@ void mostrarLibros(const Libro biblioteca[], int totalLibros)
     cout << left << setw(8) << "ID"
          << setw(25) << "TITULO"
          << setw(20) << "AUTOR"
-         << setw(8) << "ANIO" 
+         << setw(8) << "ANIO"
          << setw(12) << "ESTADO" << "\n";
     cout << "============================================================\n";
 
@@ -174,7 +171,7 @@ void mostrarLibros(const Libro biblioteca[], int totalLibros)
         cout << left << setw(8) << biblioteca[i].id
              << setw(25) << (biblioteca[i].titulo.length() > 22 ? biblioteca[i].titulo.substr(0, 22) + "..." : biblioteca[i].titulo)
              << setw(20) << (biblioteca[i].autor.length() > 17 ? biblioteca[i].autor.substr(0, 17) + "..." : biblioteca[i].autor)
-             << setw(8) << biblioteca[i].añoPublicacion  
+             << setw(8) << biblioteca[i].añoPublicacion
              << setw(12) << biblioteca[i].estado << "\n";
     }
     cout << "============================================================\n";
@@ -212,7 +209,7 @@ void buscarLibro(const Libro biblioteca[], int totalLibros)
             cout << "ID: " << biblioteca[indice].id << endl;
             cout << "Titulo: " << biblioteca[indice].titulo << endl;
             cout << "Autor: " << biblioteca[indice].autor << endl;
-            cout << "Anio: " << biblioteca[indice].añoPublicacion << endl;  
+            cout << "Anio: " << biblioteca[indice].añoPublicacion << endl;
             cout << "Estado: " << biblioteca[indice].estado << endl;
         }
         else
@@ -236,10 +233,10 @@ void buscarLibro(const Libro biblioteca[], int totalLibros)
                 cout << "ID: " << biblioteca[i].id << endl;
                 cout << "Titulo: " << biblioteca[i].titulo << endl;
                 cout << "Autor: " << biblioteca[i].autor << endl;
-                cout << "Anio: " << biblioteca[i].añoPublicacion << endl; 
+                cout << "Anio: " << biblioteca[i].añoPublicacion << endl;
                 cout << "Estado: " << biblioteca[i].estado << endl;
                 encontrado = true;
-                break; 
+                break;
             }
         }
 
@@ -259,15 +256,15 @@ void buscarLibro(const Libro biblioteca[], int totalLibros)
         for (int i = 0; i < totalLibros; i++)
         {
             if (biblioteca[i].autor == autor)
-            { 
+            {
                 cout << "\n--- LIBRO ENCONTRADO ---\n";
                 cout << "ID: " << biblioteca[i].id << endl;
                 cout << "Titulo: " << biblioteca[i].titulo << endl;
                 cout << "Autor: " << biblioteca[i].autor << endl;
-                cout << "Anio: " << biblioteca[i].añoPublicacion << endl;  
+                cout << "Anio: " << biblioteca[i].añoPublicacion << endl;
                 cout << "Estado: " << biblioteca[i].estado << endl;
                 encontrado = true;
-                break; 
+                break;
             }
         }
 
@@ -305,25 +302,42 @@ void actualizarEstado(Libro biblioteca[], int totalLibros)
 
         int opcion;
         cout << "\nNuevo estado:\n";
-        cout << "1. Disponible\n";
-        cout << "2. Prestado\n";
-        cout << "Seleccione: ";
-        cin >> opcion;
+        cout << "1. Disponible" << endl;
+        cout << "2. Prestado" << endl;
+        do
+        {
+            cout << "Seleccione una opcion valida (1 o 2): ";
+            cin >> opcion;
+            switch (opcion)
+            {
+            case 1:
+                if (biblioteca[indice].estado == "Disponible")
+                {
+                    cout << "El libro ya esta disponible.\n";
+                }
+                else
+                {
+                    biblioteca[indice].estado = "Disponible";
+                    cout << "Estado actualizado a: Disponible" << endl;
+                }
+                break;
 
-        if (opcion == 1)
-        {
-            biblioteca[indice].estado = "Disponible";
-            cout << "Estado actualizado a: Disponible\n";
-        }
-        else if (opcion == 2)
-        {
-            biblioteca[indice].estado = "Prestado";
-            cout << "Estado actualizado a: Prestado\n";
-        }
-        else
-        {
-            cout << "Opcion no valida\n";
-        }
+            case 2:
+                if (biblioteca[indice].estado == "Prestado")
+                {
+                    cout << "El libro ya esta prestado.\n";
+                }
+                else
+                {
+                    biblioteca[indice].estado = "Prestado";
+                    cout << "Estado actualizado a: Prestado" << endl;
+                }
+                break;
+
+            default:
+                break;
+            }
+        } while (opcion > 2 || opcion < 1);
     }
     else
     {
@@ -349,26 +363,37 @@ void eliminarLibro(Libro biblioteca[], int &totalLibros)
 
     if (indice != -1)
     {
-        cout << "\nLibro a eliminar:\n";
-        cout << "Titulo: " << biblioteca[indice].titulo << endl;
-        cout << "Autor: " << biblioteca[indice].autor << endl;
-
-        char confirmar;
-        cout << "\n¿Seguro que desea eliminar? (s/n): ";
-        cin >> confirmar;
-
-        if (confirmar == 's' || confirmar == 'S')
+        if (biblioteca[indice].estado == "Prestado")
         {
-            for (int i = indice; i < totalLibros - 1; i++)
-            {
-                biblioteca[i] = biblioteca[i + 1];
-            }
-            totalLibros--;
-            cout << "Libro eliminado\n";
+            cout << "\nLibro a eliminar:\n";
+            cout << "Titulo: " << biblioteca[indice].titulo << endl;
+            cout << "Autor: " << biblioteca[indice].autor << endl;
+            cout << "\nError: No se puede eliminar un libro prestado\n";
+            return;
         }
         else
         {
-            cout << "Cancelado\n";
+            cout << "\nLibro a eliminar:\n";
+            cout << "Titulo: " << biblioteca[indice].titulo << endl;
+            cout << "Autor: " << biblioteca[indice].autor << endl;
+
+            char confirmar;
+            cout << "\n¿Seguro que desea eliminar? (s/n): ";
+            cin >> confirmar;
+
+            if (confirmar == 's' || confirmar == 'S')
+            {
+                for (int i = indice; i < totalLibros - 1; i++)
+                {
+                    biblioteca[i] = biblioteca[i + 1];
+                }
+                totalLibros--;
+                cout << "Libro eliminado\n";
+            }
+            else
+            {
+                cout << "Cancelado\n";
+            }
         }
     }
     else
