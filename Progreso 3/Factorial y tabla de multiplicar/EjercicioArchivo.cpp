@@ -6,7 +6,7 @@ using namespace std;
 
 // Función para calcular y guardar el factorial
 void calcularFactorial(int numero) {
-    ofstream archivoFactorial("factorial.txt");
+    ofstream archivoFactorial("factorial.txt", ios::out);
     
     if (!archivoFactorial.is_open()) {
         cout << "Error al abrir el archivo factorial.txt" << endl;
