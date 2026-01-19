@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagramas de Flujo - Proyecto SGA-NYC</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.17.1/flowchart.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Diagramas de Flujo - Proyecto SGA-NYC</h1>
+            <p>Sistema de Gestión de Aire - Nueva York</p>
+        </div>
+        
+        <div class="tabs-container">
+            <button class="tab-button active" onclick="showDiagram(0)">1. main()</button>
+            <button class="tab-button" onclick="showDiagram(1)">2. generarInterpretacion</button>
+            <button class="tab-button" onclick="showDiagram(2)">3. calcularPredicciones</button>
+            <button class="tab-button" onclick="showDiagram(3)">4. monitoreoActual</button>
+            <button class="tab-button" onclick="showDiagram(4)">5. mostrarAlertas</button>
+            <button class="tab-button" onclick="showDiagram(5)">6. promediosHistoricos</button>
+            <button class="tab-button" onclick="showDiagram(6)">7. generarRecomendaciones</button>
+            <button class="tab-button" onclick="showDiagram(7)">8. exportarDatos</button>
+            <button class="tab-button" onclick="showDiagram(8)">9. inicializarDatos</button>
+            <button class="tab-button" onclick="showDiagram(9)">10. guardarHistorico</button>
+            <button class="tab-button" onclick="showDiagram(10)">11. cargarHistorico</button>
+            <button class="tab-button" onclick="showDiagram(11)">12. guardarPredicciones</button>
+            <button class="tab-button" onclick="showDiagram(12)">13. seleccionarZona</button>
+            <button class="tab-button" onclick="showDiagram(13)">14. solicitarEntrada</button>
+            <button class="tab-button" onclick="showDiagram(14)">15. solicitarEntero</button>
+            <button class="tab-button" onclick="showDiagram(15)">16. esperarEnter</button>
+        </div>
+        
+        <div class="content">
+            <div class="export-controls">
+                <button class="export-button" onclick="exportCurrentDiagram()">📥 Exportar Diagrama Actual (PNG)</button>
+                <button class="export-button" onclick="exportAllDiagrams()">📦 Exportar Todos los Diagramas (PNG)</button>
+            </div>
+            
+            <div class="diagram-info active" id="info-0">
+                <h2>1. FUNCIÓN: main()</h2>
+                <div class="info-grid">
+                    <div><strong>📄 Archivo:</strong> FinalProject.c</div>
+                    <div><strong>📝 Descripción:</strong> Orquesta la aplicación y muestra menú principal</div>
+                </div>
+            </div>
+            
+            <div class="diagram-container" id="canvas-0"></div>
+            
+            <!-- Los demás contenedores de info se crean dinámicamente -->
+        </div>
+        
+        <div class="footer">
+            <p>📊 Proyecto SGA-NYC | Diagramas de Flujo Interactivos</p>
+            <p>Creado con Flowchart.js | Enero 2026</p>
+        </div>
+    </div>
+
+    <script src="diagramas.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+.tabs-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 20px;
+    background: #f5f5f5;
+    border-bottom: 2px solid #ddd;
+    overflow-x: auto;
+}
+
+.tab-button {
+    padding: 12px 20px;
+    border: none;
+    background: white;
+    color: #333;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    border-left: 4px solid transparent;
+}
+
+.tab-button:hover {
+    background: #e8e8e8;
+    transform: translateY(-2px);
+}
+
+.tab-button.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-left-color: #fff;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.content {
+    padding: 30px;
+    min-height: 600px;
+}
+
+.export-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.export-button {
+    padding: 12px 24px;
+    border: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.export-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.export-button:active {
+    transform: translateY(0);
+}
+
+.diagram-info {
+    display: none;
+    margin-bottom: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+.diagram-info.active {
+    display: block;
+}
+
+.diagram-info h2 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.info-grid div {
+    color: #333;
+}
+
+.info-grid strong {
+    color: #667eea;
+}
+
+.diagram-container {
+    display: none;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    overflow-x: auto;
+    min-height: 400px;
+    animation: fadeIn 0.3s ease;
+}
+
+.diagram-container.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.footer {
+    background: #f5f5f5;
+    padding: 20px;
+    text-align: center;
+    color: #666;
+    border-top: 2px solid #ddd;
+}
+
+.footer p {
+    margin: 5px 0;
+}
+
+/* Estilos para flowchart */
+svg {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 1.8em;
+    }
+    
+    .tabs-container {
+        padding: 10px;
+        gap: 3px;
+    }
+    
+    .tab-button {
+        padding: 10px 15px;
+        font-size: 0.85em;
+    }
+    
+    .content {
+        padding: 15px;
+    }
+}
